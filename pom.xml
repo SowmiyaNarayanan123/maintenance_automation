@@ -6,10 +6,10 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.6.2</version>
+		<version>2.7.0</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.nectar</groupId>
+	<groupId>com.nectar.honeycomb</groupId>
 	<artifactId>maintenance-automation</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>maintenance-automation</name>
@@ -29,6 +29,7 @@
 	</scm>
 	<properties>
 		<java.version>11</java.version>
+		<cassandra.driver.version>3.11.0</cassandra.driver.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -66,10 +67,30 @@
 			<artifactId>javax.persistence-api</artifactId>
 		</dependency>
 		<dependency>
-    <groupId>com.vladmihalcea</groupId>
-    <artifactId>hibernate-types-52</artifactId>
-    <version>2.21.1</version>
-</dependency>
+			<groupId>com.vladmihalcea</groupId>
+			<artifactId>hibernate-types-52</artifactId>
+			<version>2.21.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.datastax.cassandra</groupId>
+			<artifactId>cassandra-driver-core</artifactId>
+			<version>${cassandra.driver.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.datastax.cassandra</groupId>
+			<artifactId>cassandra-driver-mapping</artifactId>
+			<version>${cassandra.driver.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>io.dropwizard.metrics</groupId>
+			<artifactId>metrics-core</artifactId>
+			<version>3.2.6</version>
+		</dependency>
 
 	</dependencies>
 	<profiles>
@@ -156,6 +177,14 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
